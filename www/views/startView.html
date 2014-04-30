@@ -1,0 +1,84 @@
+<!-- ####################################################### -->
+<!-- #           HarvMax Inc.                              # -->
+<!-- # "Start" View for Quiz Time                          # -->
+<!-- #                                                     # -->
+<!-- ####################################################### -->
+
+<div class="viewBackground">
+ <div class="navigationBar">
+  <div id="startView_AppTitle"></div>
+ </div>
+ <div class="content avoidNavigationBar avoidToolBar" id="startView_welcome">
+ </div>
+ <div class="toolBar">
+  <button class="barButton" id="startView_startButton" style="right:10px"></button>
+ </div>
+</div>
+
+<div id="startView_welcome_en" class="hidden">
+ <h2>PhoneGap-Nabiypy Sample Quiz Game App</h2>
+ <h3>Let's Get Local!</h3>
+ <img border="0" src="../images/banner-icon.png" width=204 height=288></img>
+ <!-- <p>This application demonstrates localization
+    between two languages, based on your device's
+    language settings. The two languages implemented
+    are English and Spanish.</p> -->
+</div>
+
+<div id="startView_welcome_es" class="hidden">
+ <h2>Ejemplo de app de PhoneGap-Nabiypy</h2>
+ <h3>Let's Get Local!</h3>
+ <p>Esta aplicación muestra la localización
+     entre los dos idiomas, sobre la base de su dispositivo de
+     la configuración de idioma. Las dos lenguas aplicadas
+     son Inglés y Español.</p>
+</div>
+
+
+<script>
+  
+  var startView = $ge("startView") || {};  // properly namespace
+  
+  /**
+   *
+   * Initializes the view.
+   *
+   * We set the view's title to be an image (localized), display a
+   * localized welcome message, and attach the touchstart event
+   * to our "start" button.
+   *
+   */
+  
+  startView.initializeView = function ()
+  {
+    startView.applicationTitleImage = $ge("startView_AppTitle");
+    startView.applicationTitleImage.style.backgroundImage = 
+        "url('./images/" + __T("APP_TITLE_IMAGE") + "')";
+    
+    startView.startButton = $ge("startView_startButton");
+    startView.startButton.innerHTML = __T("START");
+    PKUI.CORE.addTouchListener( startView.startButton, "touchend", startView.startGame );
+    
+    // based on our locale, load the appropriate
+    // welcome content.
+    
+    var theWelcomeContent = $geLocale("startView_welcome");
+    $ge("startView_welcome").innerHTML = theWelcomeContent.innerHTML;
+  
+  }
+  
+  /**
+   *
+   * Called when the user touches the "Start" button.
+   *
+   * We push the gameView on to the viewStack so that the game
+   * starts. PKUI.CORE.pushView automatically calls viewWillAppear
+   * in the gameView to start the game.
+   *
+   */
+  startView.startGame = function()
+  {
+    PKUI.CORE.pushView ( gameView );
+  }
+  
+</script>
